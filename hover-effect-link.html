@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    @keyframes shake {
+      25% {
+          transform: rotate(calc(var(--angle) * -1));
+      }
+
+      50% {
+          transform: rotate(var(--angle));
+      }
+
+      100% {
+          transform: rotate(0deg);
+      }
+    }
+
+    body{
+      font-family: sans-serif;
+    }
+
+    .snake-effect {
+        --width: 100%;
+        --time: 0.7s;
+        position: relative;
+        display: inline-block;
+        height: 1em;
+        padding: 1em;
+        color: white;
+        background: #222;
+        overflow: hidden;
+    }
+
+    .snake-effect text {
+        position: relative;
+        z-index: 5;
+        transition: color var(--time);
+    }
+
+    .snake-effect:hover text {
+        color: #222;
+    }
+    .snake-effect span {
+        border-radius: 100%;
+        position: absolute;
+        display: block;
+        content: "";
+        z-index: 0;
+        width: 0;
+        height: 0;
+        background: #fff;
+        transform: translate(-50%, -50%);
+        transition: width var(--time), padding-top var(--time);
+    }
+
+    .snake-effect:hover span {
+        width: calc(var(--width)*2.25);
+        padding-top: calc(var(--width)* 2.25);
+    }
+
+    .animated {
+        --angle: 5deg;
+        animation: shake 0.3s;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div class="display">
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+    <a class="snake-effect">
+      <span></span><text>snake-effect Me!</text>
+    </a>
+
+  </div>
+
+
+  <script>
+
+    const animatedClassName = "animated";
+    const ELEMENTS = document.querySelectorAll(".snake-effect");
+    const ELEMENTS_SPAN = [];
+
+    ELEMENTS.forEach((element, index) => {
+        let addAnimation = false;
+
+        if (!ELEMENTS_SPAN[index])
+            ELEMENTS_SPAN[index] = element.querySelector("span");
+
+        element.addEventListener("mouseover", e => {
+            ELEMENTS_SPAN[index].style.left = e.pageX - element.offsetLeft + "px";
+            ELEMENTS_SPAN[index].style.top = e.pageY - element.offsetTop + "px";
+
+            if (addAnimation) element.classList.add(animatedClassName);
+        });
+
+        element.addEventListener("mouseout", e => {
+            ELEMENTS_SPAN[index].style.left = e.pageX - element.offsetLeft + "px";
+            ELEMENTS_SPAN[index].style.top = e.pageY - element.offsetTop + "px";
+        });
+    });
+
+  </script>
+  
+</body>
+</html>
